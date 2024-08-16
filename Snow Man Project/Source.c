@@ -37,6 +37,8 @@ unsigned int screenWidth = 1000;
 unsigned int screenHeight = 800;
 unsigned int frameCount = 0; //Frame count
 
+int floorRandScale = 0;
+
 //Snowman offset from default location
 int snowmanXOffset = 0; //X offset 
 int snowmanYOffset = 0; //Y offset
@@ -84,6 +86,7 @@ void init(void)
 	gluOrtho2D(0.0, screenWidth, 0.0, screenHeight);
 
 	GenerateParticles();
+	floorRandScale = GLUE_RAND(50);
 }
 
 void main(int argc, char** argv)
@@ -132,9 +135,9 @@ void display(void)
 	glBegin(GL_POLYGON);
 	GLUE_COLOUR(floorDarkColour);
 	glVertex2f(100, screenHeight / 3);
-	glVertex2f(screenWidth - 100, screenHeight / 3);
+	glVertex2f(screenWidth - (100+ floorRandScale), screenHeight / 3);
 	GLUE_COLOUR(floorLightColour);
-	glVertex2f(screenWidth + 100, 0);
+	glVertex2f(screenWidth + (100 + floorRandScale), 0);
 	glVertex2f(-100, 0);
 	glEnd();
 
@@ -224,7 +227,7 @@ void keyPressed(unsigned char key, int x, int y)
 
 		//Move the snowman down
 	case KEY_K:
-		if (snowmanYOffset > -350) snowmanYOffset -= 10;
+		if (snowmanYOffset > -260) snowmanYOffset -= 10;
 		break;
 
 		//Show/hide the text
